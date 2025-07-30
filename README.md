@@ -4,31 +4,22 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
 
 <!-- auto start -->
 
-## 💰 Portfolio value: $1,149.55** (472.23% CAGR)
+## 💰 Portfolio value: $1,000.00** (N/A% CAGR)
 
 ### 📊 Holdings
 
 | Asset | Shares | Value |
 |-------|--------|-------|
-| Cash | - | $0.08 |
-| NVDA | 4.82 | $815.06 |
-| GOOGL | 1 | $189.73 |
-| RCL | 0.146 | $51.62 |
-| HEI | 0.084 | $27.04 |
-| XLI | 0.43 | $66.02 |
+| Cash | - | $35.46 |
+| SOFI | 6 | $134.40 |
+| U | 3 | $97.62 |
+| CDNS | 2 | $732.52 |
 
 ### 📈 Recent trades
 
-- **July 3, 2025 at 12:07:35 PM**: BUY 0.106 XLI @ $148.16/share ($15.70)
-- **July 3, 2025 at 6:07:01 AM**: BUY 0.101 XLI @ $148.16/share ($14.96)
-- **July 3, 2025 at 12:17:56 AM**: BUY 0.094 XLI @ $148.16/share ($13.93)
-- **July 2, 2025 at 12:07:32 PM**: BUY 0.129 XLI @ $148.01/share ($19.09)
-- **July 2, 2025 at 6:06:55 AM**: BUY 0.084 HEI @ $321.51/share ($27.01)
-- **July 2, 2025 at 12:17:45 AM**: BUY 0.146 RCL @ $315.1/share ($46.00)
-- **July 1, 2025 at 6:05:53 PM**: SELL 0.885 NVDA @ $154.45/share ($136.69)
-- **June 30, 2025 at 6:06:24 PM**: BUY 0.441 NVDA @ $158.04/share ($69.70)
-- **June 30, 2025 at 12:07:38 PM**: BUY 0.444 NVDA @ $157.75/share ($70.04)
-- **June 29, 2025 at 6:05:40 PM**: SELL 40 NIO @ $3.46/share ($138.40)
+- **July 30, 2025 at 12:38:21 AM**: BUY 2 CDNS @ $366.26/share ($732.52)
+- **July 30, 2025 at 12:38:19 AM**: BUY 3 U @ $32.54/share ($97.62)
+- **July 30, 2025 at 12:38:18 AM**: BUY 6 SOFI @ $22.4/share ($134.40)
 
 <!-- auto end -->
 

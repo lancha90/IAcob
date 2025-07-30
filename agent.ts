@@ -1,3 +1,14 @@
+/**
+ * Sistema de Trading Autónomo con IA
+ * 
+ * Este módulo implementa un agente de trading que utiliza OpenAI para tomar decisiones
+ * de inversión automáticas. El agente puede comprar/vender acciones, analizar mercados
+ * y gestionar un portfolio de manera autónoma.
+ * 
+ * @author Sistema de Trading IA
+ * @version 1.0.0
+ */
+
 import { Agent, AgentInputItem, run, tool } from "@openai/agents";
 import { existsSync } from "fs";
 import { appendFile, readFile, writeFile } from "node:fs/promises";
@@ -6,30 +17,56 @@ import { zodTextFormat } from "openai/helpers/zod";
 import invariant from "tiny-invariant";
 import { z } from "zod";
 
+// Verificar que la API key de OpenAI esté configurada
 invariant(process.env.OPENAI_API_KEY, "OPENAI_API_KEY is not set");
 const client = new OpenAI();
 
+/**
+ * Función de logging con timestamp que registra tanto en consola como en archivo
+ * @param message - Mensaje a registrar
+ */
 const log = (message: string) => {
   message = `[${new Date().toISOString()}] ${message}`;
   console.log(message);
   appendFile("agent.log", message + "\n");
 };
 
+/**
+ * Schema de validación para la estructura del portfolio
+ * Define la estructura de datos del portfolio del agente de trading
+ */
 const portfolioSchema = z.object({
+  /** Efectivo disponible para trading */
   cash: z.number(),
+  /** Holdings actuales: ticker -> cantidad de acciones */
   holdings: z.record(z.string(), z.number()),
+  /** Historial completo de transacciones */
   history: z.array(
     z.object({
+      /** Fecha y hora de la transacción en formato ISO */
       date: z.string().datetime(),
+      /** Tipo de operación: compra o venta */
       type: z.enum(["buy", "sell"]),
+      /** Símbolo de la acción (ej: AAPL, TSLA) */
       ticker: z.string(),
+      /** Número de acciones en la transacción */
       shares: z.number(),
+      /** Precio por acción al momento de la transacción */
       price: z.number(),
+      /** Valor total de la transacción */
       total: z.number(),
     })
   ),
 });
 
+/** Tipo inferido del schema del portfolio */
+type Portfolio = z.infer<typeof portfolioSchema>;
+
+/**
+ * Realiza búsquedas web utilizando OpenAI con herramientas de búsqueda
+ * @param query - Consulta de búsqueda
+ * @returns Resumen en markdown de los resultados encontrados
+ */
 const webSearch = async (query: string): Promise<string> => {
   const response = await client.responses.create({
     model: "gpt-4.1-mini",
@@ -39,6 +76,12 @@ const webSearch = async (query: string): Promise<string> => {
   return response.output_text;
 };
 
+/**
+ * Obtiene el precio actual de una acción específica usando búsqueda web
+ * @param ticker - Símbolo de la acción (ej: AAPL, TSLA)
+ * @returns Precio actual de la acción
+ * @throws Error si no se puede obtener el precio
+ */
 const getStockPrice = async (ticker: string): Promise<number> => {
   const response = await client.responses.parse({
     model: "gpt-4.1-mini",
@@ -50,7 +93,12 @@ const getStockPrice = async (ticker: string): Promise<number> => {
   return response.output_parsed.price;
 };
 
-const getPortfolio = async (): Promise<z.infer<typeof portfolioSchema>> => {
+/**
+ * Lee y valida el portfolio desde el archivo JSON
+ * @returns Portfolio validado con estructura correcta
+ * @throws Error si el arquivo no existe o tiene formato inválido
+ */
+const getPortfolio = async (): Promise<Portfolio> => {
   const portfolioData = await readFile("portfolio.json", "utf-8");
   const portfolio = portfolioSchema.parse(JSON.parse(portfolioData));
   return portfolio;
@@ -100,6 +148,10 @@ const getNetWorthTool = tool({
   },
 });
 
+/**
+ * Herramienta del agente para comprar acciones
+ * Verifica fondos disponibles, actualiza holdings y registra la transacción
+ */
 const buyTool = tool({
   name: "buy",
   description: "Buy a given stock at the current market price",
@@ -132,6 +184,10 @@ const buyTool = tool({
   },
 });
 
+/**
+ * Herramienta del agente para vender acciones
+ * Verifica acciones disponibles, actualiza efectivo y registra la transacción
+ */
 const sellTool = tool({
   name: "sell",
   description: "Sell a given stock at the current market price",
@@ -164,6 +220,10 @@ const sellTool = tool({
   },
 });
 
+/**
+ * Herramienta del agente para consultar precios de acciones
+ * Utiliza búsqueda web para obtener precios actualizados
+ */
 const getStockPriceTool = tool({
   name: "get_stock_price",
   description: "Get the current price of a given stock ticker",
@@ -177,6 +237,10 @@ const getStockPriceTool = tool({
   },
 });
 
+/**
+ * Herramienta del agente para realizar búsquedas web
+ * Permite investigar noticias, análisis de mercado e información financiera
+ */
 const webSearchTool = tool({
   name: "web_search",
   description: "Search the web for information",
@@ -190,6 +254,10 @@ const webSearchTool = tool({
   },
 });
 
+/**
+ * Herramienta obligatoria del agente para procesos de razonamiento
+ * Registra cada paso del proceso de toma de decisiones del agente
+ */
 const thinkTool = tool({
   name: "think",
   description: "Think about a given topic",
@@ -227,6 +295,11 @@ const calculateCAGR = (days: number, currentValue: number): number => {
   return cagr;
 };
 
+/**
+ * Calcula el retorno anualizado del portfolio desde la primera transacción
+ * @param portfolio - Datos del portfolio incluyendo historial
+ * @returns String formateado del CAGR como porcentaje (ej: "15.25%")
+ */
 const calculateAnnualizedReturn = async (
   portfolio: z.infer<typeof portfolioSchema>
 ): Promise<string> => {
@@ -267,6 +340,10 @@ const calculateAnnualizedReturn = async (
   });
 };
 
+/**
+ * Calcula el valor detallado del portfolio incluyendo cada holding
+ * @returns Objeto con valor total y desglose de cada holding
+ */
 const calculatePortfolioValue = async (): Promise<{
   totalValue: number;
   holdings: Record<string, { shares: number; value: number }>;
@@ -295,6 +372,10 @@ const calculatePortfolioValue = async (): Promise<{
   return { totalValue, holdings: holdingsWithValues };
 };
 
+/**
+ * Carga el historial de conversación desde archivo JSON
+ * @returns Array de elementos del hilo de conversación o array vacío si no existe
+ */
 const loadThread = async (): Promise<AgentInputItem[]> => {
   try {
     if (existsSync("thread.json")) {
@@ -307,6 +388,10 @@ const loadThread = async (): Promise<AgentInputItem[]> => {
   return [];
 };
 
+/**
+ * Guarda el historial de conversación en archivo JSON
+ * @param thread - Array de elementos del hilo de conversación a guardar
+ */
 const saveThread = async (thread: AgentInputItem[]) => {
   try {
     await writeFile("thread.json", JSON.stringify(thread, null, 2));
@@ -316,6 +401,10 @@ const saveThread = async (thread: AgentInputItem[]) => {
   }
 };
 
+/**
+ * Actualiza el archivo README.md con información actual del portfolio
+ * Genera una sección con valor total, holdings y trades recientes
+ */
 const updateReadme = async () => {
   try {
     const portfolio = await getPortfolio();
@@ -376,6 +465,9 @@ ${
   }
 };
 
+/**
+ * Configuración e inicialización del agente de trading
+ */
 const agent = new Agent({
   name: "Assistant",
   instructions: await readFile("system-prompt.md", "utf-8"),
@@ -390,8 +482,10 @@ const agent = new Agent({
   ],
 });
 
+// Inicio de la ejecución del agente
 log("Starting agent");
 
+// Cargar historial previo y ejecutar el agente con mensaje de trading
 const thread = await loadThread();
 const result = await run(
   agent,
@@ -405,5 +499,6 @@ const result = await run(
 );
 log(`🎉 Agent finished: ${result.finalOutput}`);
 
+// Guardar resultados y actualizar documentación
 await saveThread(result.history);
 await updateReadme();
