@@ -1,7 +1,8 @@
 {
-    "cash": 805.84,
-    "holdings": {
-      "ENPH": 6
-    },
-    "history": []
-  }
+  "cash": 272.34,
+  "holdings": {
+    "ENPH": 6,
+    "MSFT": 1
+  },
+  "history": []
+}

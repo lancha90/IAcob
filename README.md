@@ -4,13 +4,14 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
 
 <!-- auto STOCK start -->
   
-  ## 💰 Portfolio stock value: $1,000.00**
+  ## 💰 Portfolio STOCK value: $1,000.00**
   
   ### 📊 Holdings
   
   | Asset | Shares | Value |
   |-------|--------|-------|
   | ENPH | 6 | $194.16 |
+| MSFT | 1 | $533.50 |
   
   <!-- auto STOCK end -->
 
