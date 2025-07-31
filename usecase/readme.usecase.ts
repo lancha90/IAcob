@@ -19,7 +19,7 @@ export const updateReadme = async () => {
     try {
       const { totalValue, holdings } = await calculatePortfolioValue();
       const readmeContent = await readFile("README.md", "utf-8");
-      
+
       // Actualizar README con información del portfolio
       const portfolioSection = `<!-- auto start -->
   
@@ -37,15 +37,15 @@ export const updateReadme = async () => {
       ([ticker, data]) =>
         `| ${ticker} | ${data.shares} | $${data.value.toFixed(2)} |`
     )
-    .join("\\n")}
+    .join("\n")}
   
   <!-- auto end -->`;
   
       const updatedReadme = readmeContent.replace(
-        /<!-- auto start -->[\\s\\S]*<!-- auto end -->/,
+        /<!-- auto start -->[\s\S]*<!-- auto end -->/,
         portfolioSection
       );
-  
+
       await writeFile("README.md", updatedReadme);
       log(`📝 Updated README with portfolio value: $${totalValue}`);
     } catch (error) {
