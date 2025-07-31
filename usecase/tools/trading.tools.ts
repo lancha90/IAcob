@@ -14,6 +14,8 @@ import { z } from "zod";
 import { writeTradeToSupabase } from "../../infra/database/supabase.js";
 import { getPortfolio } from "../portafolio.usecase.js";
 import { getStockPrice } from "../stock.usercase.js";
+import { marketTypeConfig } from "../../config.js";
+import { MARKET_TYPE } from "../../config.js";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -61,7 +63,7 @@ export const buyTool = tool({
     
     portfolio.cash = Math.round((portfolio.cash - shares * price) * 100) / 100;
     portfolio.history = [];
-    await writeFile("portfolio.json", JSON.stringify(portfolio, null, 2));
+    await writeFile(marketTypeConfig[MARKET_TYPE].portforlio, JSON.stringify(portfolio, null, 2));
 
     logFunction(`💰 Purchased ${shares} shares of ${ticker} at $${price} per share`);
     return `Purchased ${shares} shares of ${ticker} at $${price} per share, for a total of $${
@@ -107,7 +109,7 @@ export const sellTool = tool({
 
     portfolio.cash = Math.round((portfolio.cash + shares * price) * 100) / 100;
     portfolio.history = [];
-    await writeFile("portfolio.json", JSON.stringify(portfolio, null, 2));
+    await writeFile(marketTypeConfig[MARKET_TYPE].portforlio, JSON.stringify(portfolio, null, 2));
 
     logFunction(`💸 Sold ${shares} shares of ${ticker} at $${price} per share`);
     return `Sold ${shares} shares of ${ticker} at $${price} per share, for a total of $${

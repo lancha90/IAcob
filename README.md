@@ -2,9 +2,9 @@
 
 An autonomous AI-powered stock trading agent that executes trades on GitHub Actions, built with OpenAI's Agents framework.
 
-<!-- auto start -->
+<!-- auto STOCK start -->
   
-  ## 💰 Portfolio value: $1,000.00**
+  ## 💰 Portfolio stock value: $1,000.00**
   
   ### 📊 Holdings
   
@@ -12,7 +12,19 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
   |-------|--------|-------|
   | ENPH | 6 | $194.16 |
   
-  <!-- auto end -->
+  <!-- auto STOCK end -->
+
+  <!-- auto CRYPTO start -->
+  
+  ## 💰 Portfolio crypto value: $1,000.00**
+  
+  ### 📊 Holdings
+  
+  | Asset | Shares | Value |
+  |-------|--------|-------|
+  | ENPH | 6 | $194.16 |
+  
+  <!-- auto CRYPTO end -->
 
 - [🧠 Logs](./agent.log)
 - [🧑‍💻 System prompt](./system-prompt.md)

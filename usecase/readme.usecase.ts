@@ -1,5 +1,6 @@
 import { calculatePortfolioValue } from "./portafolio.usecase.js";
 import { readFile, writeFile } from "node:fs/promises";
+import { MARKET_TYPE } from "../config";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -12,18 +13,16 @@ export const setLogFunction = (fn: (message: string) => void) => {
 
 
 /**
- * Actualiza el archivo README.md con información actual del portfolio
- * Genera una sección con valor total, holdings y trades recientes
+ * Genera la sección del portfolio para el README
+ * @param totalValue - Valor total del portfolio
+ * @param holdings - Holdings del portfolio
+ * @returns String con la sección formateada del portfolio
  */
-export const updateReadme = async () => {
-    try {
-      const { totalValue, holdings } = await calculatePortfolioValue();
-      const readmeContent = await readFile("README.md", "utf-8");
-
-      // Actualizar README con información del portfolio
-      const portfolioSection = `<!-- auto start -->
+export const generatePortfolioSection = (totalValue: number, holdings: Record<string, any>): string => {
+  console.log(`Generating portfolio section for <!-- auto ${MARKET_TYPE} start -->`);
+  return `<!-- auto ${MARKET_TYPE} start -->
   
-  ## 💰 Portfolio value: $${totalValue.toLocaleString("en-US", {
+  ## 💰 Portfolio ${MARKET_TYPE} value: $${totalValue.toLocaleString("en-US", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })}**
@@ -39,10 +38,23 @@ export const updateReadme = async () => {
     )
     .join("\n")}
   
-  <!-- auto end -->`;
+  <!-- auto ${MARKET_TYPE} end -->`;
+};
+
+/**
+ * Actualiza el archivo README.md con información actual del portfolio
+ * Genera una sección con valor total, holdings y trades recientes
+ */
+export const updateReadme = async () => {
+    try {
+      const { totalValue, holdings } = await calculatePortfolioValue();
+      const readmeContent = await readFile("README.md", "utf-8");
+
+      // Actualizar README con información del portfolio
+      const portfolioSection = generatePortfolioSection(totalValue, holdings);
   
       const updatedReadme = readmeContent.replace(
-        /<!-- auto start -->[\s\S]*<!-- auto end -->/,
+        /<!-- auto ${MARKET_TYPE} start -->[\s\S]*<!-- auto ${MARKET_TYPE} end -->/,
         portfolioSection
       );
 

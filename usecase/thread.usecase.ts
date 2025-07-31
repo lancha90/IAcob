@@ -1,8 +1,8 @@
 import { AgentInputItem } from "@openai/agents";
 import { existsSync } from "fs";
 import { readFile, writeFile } from "node:fs/promises";
-
-const THREAD_FILE = "resource/output/thread/thread.json";
+import { MARKET_TYPE } from "../config";
+import { marketTypeConfig } from "../config";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -19,7 +19,7 @@ export const setLogFunction = (fn: (message: string) => void) => {
  */
 export const saveThread = async (thread: AgentInputItem[]) => {
   try {
-    await writeFile(THREAD_FILE, JSON.stringify(thread, null, 2));
+    await writeFile(marketTypeConfig[MARKET_TYPE].thread, JSON.stringify(thread, null, 2));
     log(`💾 Saved thread history (${thread.length} items)`);
   } catch (error) {
     log(`❌ Failed to save thread history: ${error}`);
@@ -32,12 +32,12 @@ export const saveThread = async (thread: AgentInputItem[]) => {
  */
 export const loadThread = async (): Promise<AgentInputItem[]> => {
   try {
-    if (existsSync(THREAD_FILE)) {
-      const threadData = await readFile(THREAD_FILE, "utf-8");
-      log(`💹 Loaded thread history (${THREAD_FILE})`);
+    if (existsSync(marketTypeConfig[MARKET_TYPE].thread)) {
+      const threadData = await readFile(marketTypeConfig[MARKET_TYPE].thread, "utf-8");
+      log(`💹 Loaded thread history (${marketTypeConfig[MARKET_TYPE].thread})`);
       return JSON.parse(threadData);
     } else {
-      log(`⚠️ Thread history file not found: ${THREAD_FILE}`);
+      log(`⚠️ Thread history file not found: ${marketTypeConfig[MARKET_TYPE].thread}`);
     }
   } catch (error) {
     log(`⚠️ Failed to load thread history: ${error}`);

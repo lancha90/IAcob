@@ -10,7 +10,8 @@
 
 import { createClient } from '@supabase/supabase-js';
 import invariant from 'tiny-invariant';
-import { tradeSchema, createTradeSchema, type Trade, type CreateTrade } from '../../domain/dto/trade.dto.js';
+import { createTradeSchema, type Trade, type CreateTrade } from '../../domain/dto/trade.dto.js';
+import { MARKET_TYPE } from '../../config.js';
 
 // Verificar que las variables de entorno de Supabase estén configuradas
 invariant(process.env.SUPABASE_URL, "SUPABASE_URL is not set");
@@ -21,7 +22,6 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
-
 
 /**
  * Lee trades desde la tabla gh-iacob-trades en Supabase
@@ -37,6 +37,7 @@ export const readTradesFromSupabase = async (
       .from('gh-iacob-trades')
       .select('*')
       .order('created_at', { ascending: false })
+      .eq('market', MARKET_TYPE)
       .limit(limit);
 
     if (error) {
@@ -70,7 +71,7 @@ export const readTradesFromSupabase = async (
  * @throws Error si no se puede escribir el trade
  */
 export const writeTradeToSupabase = async (
-  tradeData: CreateTrade
+  tradeData: CreateTrade,
 ): Promise<string> => {
   try {
     // Validar datos antes de enviar
@@ -87,6 +88,7 @@ export const writeTradeToSupabase = async (
         total: validatedTrade.total,
         created_at: new Date().toISOString(),
         modified_at: new Date().toISOString(),
+        market: MARKET_TYPE,
       })
       .select('id')
       .single();

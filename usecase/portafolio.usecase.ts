@@ -3,6 +3,8 @@ import { readFile, writeFile } from "node:fs/promises";
 import { portfolioSchema } from "../domain/dto/portfolio.dto";
 import { readTradesFromSupabase } from "../infra/database/supabase";
 import { getStockPrice } from "./stock.usercase";
+import { marketTypeConfig } from "../config";
+import { MARKET_TYPE } from "../config";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -19,7 +21,7 @@ export const setLogFunction = (fn: (message: string) => void) => {
  * @throws Error si el arquivo no existe o tiene formato inválido
  */
 export const getPortfolio = async (): Promise<Portfolio> => {
-    const portfolioData = await readFile("portfolio.json", "utf-8");
+    const portfolioData = await readFile(marketTypeConfig[MARKET_TYPE].portforlio, "utf-8");
     const portfolio = portfolioSchema.parse(JSON.parse(portfolioData));
     
     portfolio.history = await readTradesFromSupabase();

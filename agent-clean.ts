@@ -14,9 +14,9 @@ import { Agent, AgentInputItem, run } from "@openai/agents";
 import { appendFile, readFile } from "node:fs/promises";
 import OpenAI from "openai";
 import invariant from "tiny-invariant";
-import { getPortfolioTool, getNetWorthTool, setLogFunction as setPortfolioLogFunction } from "./usecase/tools/portfolio.tools.js";
-import { buyTool, sellTool, setLogFunction as setTradingLogFunction } from "./usecase/tools/trading.tools.js";
-import { getStockPriceTool, setLogFunction as setStockLogFunction } from "./usecase/tools/stock.tools.js";
+import { setLogFunction as setPortfolioLogFunction } from "./usecase/tools/portfolio.tools.js";
+import { setLogFunction as setTradingLogFunction } from "./usecase/tools/trading.tools.js";
+import { getStockPriceTool, getCryptoPriceTool, setLogFunction as setStockLogFunction } from "./usecase/tools/stock.tools.js";
 import { setOpenAIClient as setStockOpenAIClient } from './usecase/stock.usercase.js';
 import { setOpenAIClient as setWebSearchOpenAIClient } from './usecase/websearch.usecase.js';
 import { updateReadme, setLogFunction as setReadmeLogFunction } from './usecase/readme.usecase.js';
@@ -24,12 +24,18 @@ import { loadThread, saveThread } from './usecase/thread.usecase.js';
 import { webSearchTool, setLogFunction as setWebSearchLogFunction } from './usecase/tools/websearch.tools.js';
 import { thinkTool, setLogFunction as setThinkLogFunction } from './usecase/tools/think.tools.js';
 import { setOpenAIClient as setNotificationOpenAIClient, setLogFunction as setNotificationLogFunction, sendWhatsAppMessage } from './usecase/notification.usecase.js';
+import { MarketType } from './domain/enum/market-type.enum.js';
+import { MARKET_TYPE, marketTypeConfig } from './config.js';
+import { buyTool, sellTool } from "./usecase/tools/trading.tools";
+import { getPortfolioTool, getNetWorthTool } from "./usecase/tools/portfolio.tools";
 
 // Verificar que la API key de OpenAI esté configurada
 invariant(process.env.OPENAI_API_KEY, "OPENAI_API_KEY is not set");
+invariant(process.env.IACOB_MARKET_TYPE, MarketType.STOCK);
+
 const client = new OpenAI();
 const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-const LOG_FILE = `resource/output/traces/agent-${timestamp}.log`;
+const LOG_FILE = `resource/output/traces/${MARKET_TYPE}-${timestamp}.log`;
 
 /**
  * Función de logging con timestamp que registra tanto en consola como en archivo
@@ -55,21 +61,36 @@ setStockOpenAIClient(client);
 setWebSearchOpenAIClient(client);
 setNotificationOpenAIClient(client);
 
+
+const marketTools = {
+  [MarketType.STOCK]: {
+    tools: [
+      buyTool,
+      sellTool,
+      getStockPriceTool,
+      getPortfolioTool,
+      getNetWorthTool,
+    ]
+  },
+  [MarketType.CRYPTO]: {
+    tools: [
+      buyTool,
+      sellTool,
+      getCryptoPriceTool,
+      getPortfolioTool,
+      getNetWorthTool,
+    ]
+  },
+};
+
+
 /**
  * Configuración e inicialización del agente de trading
  */
 const agent = new Agent({
-  name: "Assistant",
-  instructions: await readFile("resource/prompt/system-prompt.md", "utf-8"),
-  tools: [
-    thinkTool,
-    webSearchTool,
-    buyTool,
-    sellTool,
-    getStockPriceTool,
-    getPortfolioTool,
-    getNetWorthTool,
-  ],
+  name: marketTypeConfig[MARKET_TYPE].name,
+  instructions: await readFile(marketTypeConfig[MARKET_TYPE].prompt, "utf-8"),
+  tools: [thinkTool, webSearchTool, ...marketTools[MARKET_TYPE].tools],
 });
 
 // Inicio de la ejecución del agente

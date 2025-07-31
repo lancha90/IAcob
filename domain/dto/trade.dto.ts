@@ -54,7 +54,7 @@ export const createTradeSchema = z.object({
   code: z.string(),
   type: z.enum(["buy", "sell"]),
   ticker: z.string(),
-  shares: z.number().int().positive(),
+  shares: z.number().positive(),
   price: z.number().positive(),
   total: z.number().positive(),
 });
