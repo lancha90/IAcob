@@ -34,6 +34,7 @@ jobs:
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
           TWILIO_WHATSAPP_NUMBER: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
           TWILIO_CONTENT_SID: ${{ secrets.TWILIO_CONTENT_SID }}
+          WHATSAPP_RECIPIENT_NUMBER: ${{ secrets.WHATSAPP_RECIPIENT_NUMBER }}
         run: npm start
 
       - name: Upload logs
@@ -49,6 +50,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add portfolio.json agent.log thread.json README.md
+          git add portfolio.json README.md resource/output/
           git diff --staged --quiet || git commit -m ":loud_sound: Update portfolio after trading session [skip ci]"
           git push
