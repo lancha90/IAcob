@@ -4,22 +4,20 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
 
 <!-- auto start -->
 
-## 💰 Portfolio value: $1,000.00** (N/A% CAGR)
+## 💰 Portfolio value: $1,000.04** (N/A% CAGR)
 
 ### 📊 Holdings
 
 | Asset | Shares | Value |
 |-------|--------|-------|
-| Cash | - | $35.46 |
-| SOFI | 6 | $134.40 |
-| U | 3 | $97.62 |
-| CDNS | 2 | $732.52 |
+| Cash | - | $232.09 |
+| AMZN | 1 | $230.50 |
+| NVDA | 3 | $537.45 |
 
 ### 📈 Recent trades
 
-- **July 30, 2025 at 12:38:21 AM**: BUY 2 CDNS @ $366.26/share ($732.52)
-- **July 30, 2025 at 12:38:19 AM**: BUY 3 U @ $32.54/share ($97.62)
-- **July 30, 2025 at 12:38:18 AM**: BUY 6 SOFI @ $22.4/share ($134.40)
+- **July 30, 2025 at 5:16:02 PM**: BUY 3 NVDA @ $179.15/share ($537.45)
+- **July 30, 2025 at 5:16:02 PM**: BUY 1 AMZN @ $230.46/share ($230.46)
 
 <!-- auto end -->
 
