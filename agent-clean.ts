@@ -76,21 +76,21 @@ const agent = new Agent({
 log("Starting agent");
 
 // Cargar historial previo y ejecutar el agente con mensaje de trading
-// const thread = await loadThread();
-// const result = await run(
-//   agent,
-//   thread.concat({
-//     role: "user",
-//     content: `It's ${new Date().toLocaleString(
-//       "en-US"
-//     )}. Time for your trading analysis! Review your portfolio, scan the markets for opportunities, and make strategic trades to grow your initial $1,000 investment. Good luck! 📈`,
-//   }),
-//   { maxTurns: 100 }
-// );
-// log(`🎉 Agent finished: ${result.finalOutput}`);
+const thread = await loadThread();
+const result = await run(
+  agent,
+  thread.concat({
+    role: "user",
+    content: `It's ${new Date().toLocaleString(
+      "en-US"
+    )}. Time for your trading analysis! Review your portfolio, scan the markets for opportunities, and make strategic trades to grow your initial $1,000 investment. Good luck! 📈`,
+  }),
+  { maxTurns: 100 }
+);
+log(`🎉 Agent finished: ${result.finalOutput}`);
 
 await sendWhatsAppMessage(`IAcob is online`, process.env.WHATSAPP_RECIPIENT_NUMBER);
 
 // Guardar resultados y actualizar documentación
-// await saveThread(result.history);
-// await updateReadme();
+await saveThread(result.history);
+await updateReadme();
