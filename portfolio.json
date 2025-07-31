@@ -1,5 +1,9 @@
 {
-  "cash": 1000,
+  "cash": 54.71,
   "holdings": {
-  }
+    "NVDA": 1,
+    "MSFT": 1,
+    "AMZN": 1
+  },
+  "history": []
 }
