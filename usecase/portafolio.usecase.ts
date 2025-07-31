@@ -2,9 +2,10 @@ import { Portfolio } from "../domain/dto/portfolio.dto";
 import { readFile, writeFile } from "node:fs/promises";
 import { portfolioSchema } from "../domain/dto/portfolio.dto";
 import { readTradesFromSupabase } from "../infra/database/supabase";
-import { getStockPrice } from "./stock.usercase";
+import { getCryptoPrice, getStockPrice } from "./stock.usercase";
 import { marketTypeConfig } from "../config";
 import { MARKET_TYPE } from "../config";
+import { MarketType } from "../domain/enum/market-type.enum";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -124,7 +125,7 @@ export const calculateNetWorth = async (): Promise<number> => {
     for (const [ticker, shares] of Object.entries(portfolio.holdings)) {
       if (shares > 0) {
         try {
-          const price = await getStockPrice(ticker);
+          const price = MARKET_TYPE === MarketType.STOCK ? await getStockPrice(ticker) : await getCryptoPrice(ticker);
           const value = Math.round(shares * price * 100) / 100;
           holdingsWithValues[ticker] = { shares, value };
           totalHoldingsValue += value;

@@ -1,6 +1,7 @@
 import { calculatePortfolioValue } from "./portafolio.usecase.js";
 import { readFile, writeFile } from "node:fs/promises";
 import { MARKET_TYPE } from "../config";
+import { MarketType } from "../domain/enum/market-type.enum";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -54,7 +55,7 @@ export const updateReadme = async () => {
       const portfolioSection = generatePortfolioSection(totalValue, holdings);
   
       const updatedReadme = readmeContent.replace(
-        /<!-- auto ${MARKET_TYPE} start -->[\s\S]*<!-- auto ${MARKET_TYPE} end -->/,
+        MARKET_TYPE === MarketType.STOCK ? /<!-- auto STOCK start -->[\s\S]*<!-- auto STOCK end -->/ : /<!-- auto CRYPTO start -->[\s\S]*<!-- auto CRYPTO end -->/,
         portfolioSection
       );
 
