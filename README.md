@@ -10,14 +10,10 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
 
 | Asset | Shares | Value |
 |-------|--------|-------|
-| Cash | - | $232.09 |
-| AMZN | 1 | $230.50 |
-| NVDA | 3 | $537.45 |
+| Cash | - | $1,000.04 |
 
 ### 📈 Recent trades
 
-- **July 30, 2025 at 5:16:02 PM**: BUY 3 NVDA @ $179.15/share ($537.45)
-- **July 30, 2025 at 5:16:02 PM**: BUY 1 AMZN @ $230.46/share ($230.46)
 
 <!-- auto end -->
 
@@ -52,21 +48,10 @@ The agent's portfolio is stored in `portfolio.json`:
 
 ```json
 {
-  "cash": 95.44,
+  "cash": 1000,
   "holdings": {
-    "AAPL": 4,
-    "CLNE": 56
   },
-  "history": [
-    {
-      "date": "2025-06-21T12:43:07.141Z",
-      "type": "buy",
-      "ticker": "AAPL",
-      "shares": 4,
-      "price": 201.5,
-      "total": 806
-    }
-  ]
+  "history": []
 }
 ```
 
