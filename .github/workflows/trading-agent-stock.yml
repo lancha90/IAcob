@@ -1,4 +1,4 @@
-name: Trading agent
+name: STOCK TRADING AGENT
 
 on:
   schedule:
