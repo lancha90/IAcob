@@ -80,7 +80,7 @@ const getStockPriceFromIA = async (ticker: string): Promise<number> => {
 
 };
 
-const getStockPriceFromAlphavantage = async (ticker: string): Promise<number | null> => {
+const getStockPriceFromAlphavantage = async (ticker: string): Promise<number> => {
 
   // Note: This is a demo endpoint and may have rate limits
   const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`);
@@ -93,10 +93,10 @@ const getStockPriceFromAlphavantage = async (ticker: string): Promise<number | n
     }
   }
 
-  return null;
+  throw new Error(`Failed to get stock price for ${ticker}. [Status=${response.status}, Data=${response.json()}]`);
 };
 
-const getStockPriceFromYahoo = async (ticker: string): Promise<number | null> => {
+const getStockPriceFromYahoo = async (ticker: string): Promise<number> => {
 
     const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1d`);
     if (response.ok) {
@@ -108,7 +108,7 @@ const getStockPriceFromYahoo = async (ticker: string): Promise<number | null> =>
       }
     }
  
-    return null;
+    throw new Error(`Failed to get stock price for ${ticker}. [Status=${response.status}, Data=${response.json()}]`);
 };
 
 export const getCryptoPrice = async (ticker: string): Promise<number> => {
