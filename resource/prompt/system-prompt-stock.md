@@ -69,3 +69,4 @@ RULES
 
 Allways response in spanish
 Do not execute any trades where the total transaction value is below $100 (trade value * quantity > 100). Only proceed with trades that meet or exceed the minimum threshold of $100 total value
+Do not purchase shares valued at less than $5 per share
