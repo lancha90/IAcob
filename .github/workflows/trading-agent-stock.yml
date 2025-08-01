@@ -41,6 +41,7 @@ jobs:
           TWILIO_WHATSAPP_NUMBER: ${{ secrets.TWILIO_WHATSAPP_NUMBER }}
           TWILIO_CONTENT_SID: ${{ secrets.TWILIO_CONTENT_SID }}
           WHATSAPP_RECIPIENT_NUMBER: ${{ secrets.WHATSAPP_RECIPIENT_NUMBER }}
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
           IACOB_MARKET_TYPE: STOCK
         run: npm start
 
