@@ -17,15 +17,15 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
 
   <!-- auto CRYPTO start -->
   
-  ## 💰 Portfolio CRYPTO value: $996.31**
+  ## 💰 Portfolio CRYPTO value: $976.07**
   
   ### 📊 Holdings
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | SOL | 2.3118999999999996 | $398.18 |
-| BTC | 0.002583 | $299.39 |
-| ETH | 0.0807 | $298.66 |
+  | SOL | 2.3118999999999996 | $387.43 |
+| BTC | 0.002583 | $296.61 |
+| ETH | 0.0807 | $291.95 |
   
   <!-- auto CRYPTO end -->
 
