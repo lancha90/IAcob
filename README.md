@@ -1,6 +1,6 @@
-# 🤖 Priced In
+# 🤖 IAcob - Autonomous Trading Agent
 
-An autonomous AI-powered stock trading agent that executes trades on GitHub Actions, built with OpenAI's Agents framework.
+An autonomous AI-powered trading agent built with OpenAI's Agents framework and clean architecture principles. The agent trades both stocks and cryptocurrencies with the goal of growing an initial $1,000 investment through strategic decision-making.
 
 <!-- auto STOCK start -->
   
@@ -33,13 +33,47 @@ An autonomous AI-powered stock trading agent that executes trades on GitHub Acti
 - [🧑‍💻 System prompt](./system-prompt.md)
 - [📁 Source code](./agent.ts)
 
+## 🏗️ Architecture
+
+This project follows **Clean Architecture** principles with clear separation of concerns:
+
+```
+domain/          # Business entities and validation schemas
+├── dto/         # Data Transfer Objects with Zod validation
+├── enum/        # Market type enums (STOCK/CRYPTO)
+
+usecase/         # Business logic layer
+├── tools/       # OpenAI Agent tools (buy, sell, portfolio, etc.)
+├── *.usecase.ts # Core business operations
+
+infra/           # Infrastructure layer
+├── database/    # Supabase integration for trade persistence
+
+resource/        # External resources
+├── prompt/      # AI agent system prompts
+├── output/      # Generated logs and thread histories
+```
+
+## 🚀 Key Features
+
+- **Dual Market Support**: Trades both stocks and cryptocurrencies
+- **Autonomous Decision Making**: Uses mandatory "think" tool for transparency
+- **Dual Persistence Strategy**: 
+  - Local JSON files for current portfolio state
+  - Supabase database for complete trade history
+- **Web Search Integration**: Market research and analysis capabilities
+- **Clean Architecture**: Modular, testable, and maintainable codebase
+- **Automated Documentation**: README auto-updates with portfolio values
+- **WhatsApp Notifications**: Status updates via Twilio
+- **Comprehensive Logging**: Timestamped execution traces
+
 ## 🛠️ Installation
 
 1. Clone the repository:
 
 ```bash
 git clone https://github.com/AnandChowdhary/priced-in.git
-cd priced-in
+cd IAcob
 ```
 
 2. Install dependencies:
@@ -48,28 +82,51 @@ cd priced-in
 npm install
 ```
 
-3. Set up your OpenAI API key:
+3. Set up environment variables:
 
 ```bash
-export OPENAI_API_KEY="your-api-key-here"
+# Required - OpenAI API for the trading agent
+export OPENAI_API_KEY="your-openai-api-key"
+
+# Required - Market type (STOCK or CRYPTO)
+export IACOB_MARKET_TYPE="STOCK"  # or "CRYPTO"
+
+# Required - Supabase for trade history persistence
+export SUPABASE_URL="your-supabase-url"
+export SUPABASE_KEY="your-supabase-anon-key"
+
+# Required - Twilio for WhatsApp notifications
+export TWILIO_ACCOUNT_SID="your-twilio-account-sid"
+export TWILIO_AUTH_TOKEN="your-twilio-auth-token"
+export TWILIO_CONTENT_SID="your-twilio-content-template-sid"
+export TWILIO_WHATSAPP_NUMBER="whatsapp:+14155238886"  # Twilio Sandbox number
+export WHATSAPP_RECIPIENT_NUMBER="whatsapp:+1234567890"  # Your WhatsApp number
+
+# Optional - Alpha Vantage API for stock prices (fallback)
+export ALPHAVANTAGE_API_KEY="your-alphavantage-api-key"
 ```
 
 ## 🏃‍♂️ Running the agent
 
-The agent's portfolio is stored in `portfolio.json`:
+The agent's portfolio is stored in separate JSON files:
+
+- `portfolio_stock.json` - Stock trading portfolio
+- `portfolio_crypto.json` - Cryptocurrency trading portfolio
 
 ```json
 {
   "cash": 1000,
   "holdings": {
+    "AAPL": 5,
+    "MSFT": 2
   },
   "history": []
 }
 ```
 
 - **cash**: Available cash balance for trading
-- **holdings**: Current stock positions (ticker: number of shares)
-- **history**: Complete record of all trades
+- **holdings**: Current positions (ticker: number of shares/coins)
+- **history**: Complete trade history (stored in Supabase, cleared locally)
 
 ### Local execution
 
@@ -81,21 +138,46 @@ npm start
 
 This will execute one trading session where the agent will:
 
-1. Check the current portfolio
-2. Analyze market conditions
-3. Make trading decisions
-4. Update the portfolio
+1. Load conversation history from thread storage
+2. Use the "think" tool for transparent decision-making
+3. Check current portfolio status and net worth
+4. Perform market research via web search
+5. Execute buy/sell decisions based on analysis
+6. Update portfolio and save trade history to Supabase
+7. Send WhatsApp notification and update README
+
+## 🔧 Agent Tools
+
+The agent has access to these tools:
+
+- **think**: Mandatory reasoning tool for transparency
+- **get_portfolio**: Check current portfolio status and holdings
+- **get_net_worth**: Quick portfolio value and return percentage
+- **get_stock_price** / **get_crypto_price**: Real-time price queries
+- **buy** / **sell**: Execute trades with automatic validation
+- **web_search**: Market research and news analysis
+
+## 🛡️ Trading Strategy
+
+The agent follows a structured decision process:
+
+1. **Think**: Mandatory reasoning before any action
+2. **Portfolio Review**: Check current positions and cash
+3. **Market Analysis**: Research trends and opportunities
+4. **Risk Assessment**: Evaluate potential downside
+5. **Execution**: Make calculated trading decisions
+6. **Documentation**: Update logs and portfolio tracking
 
 ### Automated execution via GitHub Actions
 
-The agent is configured to run automatically every hour via GitHub Actions. To enable this:
+The agent can be configured to run automatically via GitHub Actions. To enable this:
 
 1. Fork this repository
 2. Go to Settings → Secrets and variables → Actions
-3. Add a new repository secret named `OPENAI_API_KEY` with your OpenAI API key
-4. The agent will now run automatically every hour
+3. Add repository secrets for all required environment variables
+4. Configure the workflow schedule as needed
 
-You can also trigger a manual run from the Actions tab in your GitHub repository.
+You can also trigger manual runs from the Actions tab in your GitHub repository.
 
 ## ⚠️ Disclaimer
 
