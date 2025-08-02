@@ -20,7 +20,7 @@ import { getStockPriceTool, getCryptoPriceTool, setLogFunction as setStockLogFun
 import { setOpenAIClient as setStockOpenAIClient } from './usecase/stock.usercase.js';
 import { setOpenAIClient as setWebSearchOpenAIClient } from './usecase/websearch.usecase.js';
 import { updateReadme, setLogFunction as setReadmeLogFunction } from './usecase/readme.usecase.js';
-import { loadThread, saveThread } from './usecase/thread.usecase.js';
+import { loadThread, loadThreadLimited, saveThread } from './usecase/thread.usecase.js';
 import { webSearchTool, setLogFunction as setWebSearchLogFunction } from './usecase/tools/websearch.tools.js';
 import { thinkTool, setLogFunction as setThinkLogFunction } from './usecase/tools/think.tools.js';
 import { setOpenAIClient as setNotificationOpenAIClient, setLogFunction as setNotificationLogFunction, sendWhatsAppMessage } from './usecase/notification.usecase.js';
@@ -28,6 +28,9 @@ import { MarketType } from './domain/enum/market-type.enum.js';
 import { MARKET_TYPE, marketTypeConfig } from './config.js';
 import { buyTool, sellTool } from "./usecase/tools/trading.tools";
 import { getPortfolioTool, getNetWorthTool } from "./usecase/tools/portfolio.tools";
+import { setLogFunction as setBalanceLogFunction } from './infra/database/balance.supabase.js';
+import { setLogFunction as setTradeLogFunction } from './infra/database/trades.supabase.js';
+
 
 // Verificar que la API key de OpenAI esté configurada
 invariant(process.env.OPENAI_API_KEY, "OPENAI_API_KEY is not set");
@@ -56,6 +59,8 @@ setWebSearchLogFunction(log);
 setThinkLogFunction(log);
 setPortfolioLogFunction(log);
 setNotificationLogFunction(log);
+setBalanceLogFunction(log);
+setTradeLogFunction(log);
 
 setStockOpenAIClient(client);
 setWebSearchOpenAIClient(client);
@@ -97,7 +102,8 @@ const agent = new Agent({
 log("Starting agent");
 
 // Cargar historial previo y ejecutar el agente con mensaje de trading
-const thread = await loadThread();
+const thread = await loadThreadLimited(30);
+// const thread = await loadThread();
 const result = await run(
   agent,
   thread.concat({

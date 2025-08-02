@@ -23,6 +23,17 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
+
+/**
+ * Función de logging externa (debe ser inyectada)
+ */
+let log: (message: string) => void = console.log;
+
+export const setLogFunction = (fn: (message: string) => void) => {
+  log = fn;
+};
+
+
 /**
  * Lee trades desde la tabla gh-iacob-trades en Supabase
  * @param limit - Número máximo de trades a retornar (default: 100)
@@ -55,11 +66,11 @@ export const readTradesFromSupabase = async (
       created_at: trade.created_at, // Mantener created_at como date para portfolio
     })) || [];
 
-    console.log(`📖 ${transformedData.length} trades leídos desde Supabase`);
+    log(`📖 ${transformedData.length} trades leídos desde Supabase`);
     return transformedData;
 
   } catch (error) {
-    console.error('❌ Error leyendo trades desde Supabase:', error);
+    log(`❌ Error leyendo trades desde Supabase: ${error}`);
     throw error;
   }
 };
@@ -101,11 +112,11 @@ export const writeTradeToSupabase = async (
       throw new Error('No UUID retornado de la operación en Supabase');
     }
 
-    console.log(`💾 Trade guardado en Supabase: ${data.id}`);
+    log(`💾 Trade guardado en Supabase: ${data.id}`);
     return data.id;
 
   } catch (error) {
-    console.error('❌ Error escribiendo trade a Supabase:', error);
+    log(`❌ Error escribiendo trade a Supabase: ${error}`);
     throw error;
   }
 };

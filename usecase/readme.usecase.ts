@@ -20,7 +20,6 @@ export const setLogFunction = (fn: (message: string) => void) => {
  * @returns String con la sección formateada del portfolio
  */
 export const generatePortfolioSection = (totalValue: number, holdings: Record<string, any>): string => {
-  console.log(`Generating portfolio section for <!-- auto ${MARKET_TYPE} start -->`);
   return `<!-- auto ${MARKET_TYPE} start -->
   
   ## 💰 Portfolio ${MARKET_TYPE} value: $${totalValue.toLocaleString("en-US", {

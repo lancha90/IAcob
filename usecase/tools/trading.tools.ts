@@ -11,11 +11,12 @@ import { tool } from "@openai/agents";
 import { writeFile } from "node:fs/promises";
 import { randomUUID } from "crypto";
 import { z } from "zod";
-import { writeTradeToSupabase } from "../../infra/database/supabase.js";
+import { writeTradeToSupabase } from "../../infra/database/trades.supabase.js";
 import { getPortfolio } from "../portafolio.usecase.js";
 import { getStockPrice } from "../stock.usercase.js";
 import { marketTypeConfig } from "../../config.js";
 import { MARKET_TYPE } from "../../config.js";
+import { buyStock, sellStock } from "../trading.usecase.js";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -38,37 +39,7 @@ export const buyTool = tool({
     shares: z.number().positive(),
   }),
   async execute({ ticker, shares }) {
-    const price = await getStockPrice(ticker);
-    const portfolio = await getPortfolio();
-    
-    if (portfolio.cash < shares * price) {
-      return `You don't have enough cash to buy ${shares} shares of ${ticker}. Your cash balance is $${portfolio.cash} and the price is $${price} per share.`;
-    }
-
-    portfolio.holdings[ticker] = (portfolio.holdings[ticker] ?? 0) + shares;
-
-    // Escribir trade a Supabase
-    try {
-      await writeTradeToSupabase({
-        code: randomUUID(), // Generar código único UUID
-        type: "buy",
-        ticker,
-        shares,
-        price,
-        total: shares * price,
-      });
-    } catch (error) {
-      logFunction(`⚠️ Failed to write trade to Supabase: ${error}`);
-    }
-    
-    portfolio.cash = Math.round((portfolio.cash - shares * price) * 100) / 100;
-    portfolio.history = [];
-    await writeFile(marketTypeConfig[MARKET_TYPE].portforlio, JSON.stringify(portfolio, null, 2));
-
-    logFunction(`💰 Purchased ${shares} shares of ${ticker} at $${price} per share`);
-    return `Purchased ${shares} shares of ${ticker} at $${price} per share, for a total of $${
-      shares * price
-    }. Your cash balance is now $${portfolio.cash}.`;
+    return buyStock(ticker, shares);
   },
 });
 
@@ -84,36 +55,6 @@ export const sellTool = tool({
     shares: z.number().positive(),
   }),
   async execute({ ticker, shares }) {
-    const portfolio = await getPortfolio();
-    
-    if (portfolio.holdings[ticker] < shares) {
-      return `You don't have enough shares of ${ticker} to sell. You have ${portfolio.holdings[ticker]} shares.`;
-    }
-
-    const price = await getStockPrice(ticker);
-    portfolio.holdings[ticker] = (portfolio.holdings[ticker] ?? 0) - shares;
-
-    // Escribir trade a Supabase
-    try {
-      await writeTradeToSupabase({
-        code: randomUUID(), // Generar código único UUID
-        type: "sell",
-        ticker,
-        shares,
-        price,
-        total: shares * price,
-      });
-    } catch (error) {
-      logFunction(`⚠️ Failed to write trade to Supabase: ${error}`);
-    }
-
-    portfolio.cash = Math.round((portfolio.cash + shares * price) * 100) / 100;
-    portfolio.history = [];
-    await writeFile(marketTypeConfig[MARKET_TYPE].portforlio, JSON.stringify(portfolio, null, 2));
-
-    logFunction(`💸 Sold ${shares} shares of ${ticker} at $${price} per share`);
-    return `Sold ${shares} shares of ${ticker} at $${price} per share, for a total of $${
-      shares * price
-    }. Your cash balance is now $${portfolio.cash}.`;
+    return sellStock(ticker, shares);
   },
 });

@@ -44,3 +44,37 @@ export const loadThread = async (): Promise<AgentInputItem[]> => {
   }
   return [];
 };
+
+/**
+ * Carga el historial de conversación limitando los tokens para reducir rate limits
+ * @param maxItems - Número máximo de elementos del thread a cargar (default: 30)
+ * @returns Array limitado de elementos del hilo de conversación
+ */
+export const loadThreadLimited = async (
+  maxItems: number = 30
+): Promise<AgentInputItem[]> => {
+  try {
+    if (existsSync(marketTypeConfig[MARKET_TYPE].thread)) {
+      const threadData = await readFile(marketTypeConfig[MARKET_TYPE].thread, "utf-8");
+      const fullThread = JSON.parse(threadData);
+      
+      // Tomar solo los últimos elementos del thread
+      const recentThread = fullThread
+      .filter(item => item.name !== "get_crypto_price")
+      .filter(item => item.name !== "get_stock_price")
+      .filter(item => item.name !== "get_portfolio")
+      .filter(item => item.name !== "buy")
+      .filter(item => item.name !== "sell")
+      .slice(-maxItems);
+       
+      log(`🔢 Loaded limited thread history: ${recentThread.length} items (max ${maxItems})`);
+
+      return recentThread;
+    } else {
+      log(`⚠️ Thread history file not found: ${marketTypeConfig[MARKET_TYPE].thread}`);
+    }
+  } catch (error) {
+    log(`⚠️ Failed to load limited thread history: ${error}`);
+  }
+  return [];
+};
