@@ -84,14 +84,14 @@ export const sellStock = async (ticker: string, shares: number) => {
       });
     } catch (error) {
       log(`⚠️ Failed to write trade to Supabase from sell stock: ${error}`);
+    }
 
-      portfolio.cash = Math.round((portfolio.cash + shares * price) * 100) / 100;
+    portfolio.cash = Math.round((portfolio.cash + shares * price) * 100) / 100;
 
-      try {
-        await writeBalanceToSupabase(code, portfolio.cash);
-      } catch (error) {
-        log(`⚠️ Failed to write balance to Supabase: ${error}`);
-      }
+    try {
+      await writeBalanceToSupabase(code, portfolio.cash);
+    } catch (error) {
+      log(`⚠️ Failed to write balance to Supabase: ${error}`);
     }
 
     await writeFile(marketTypeConfig[MARKET_TYPE].portforlio, JSON.stringify(portfolio, null, 2));
