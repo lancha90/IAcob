@@ -1,11 +1,12 @@
 import { Portfolio } from "../domain/dto/portfolio.dto";
 import { readFile, writeFile } from "node:fs/promises";
 import { portfolioSchema } from "../domain/dto/portfolio.dto";
-import { readTradesFromSupabase } from "../infra/database/supabase";
+import { readTradesFromSupabase } from "../infra/database/trades.supabase";
 import { getCryptoPrice, getStockPrice } from "./stock.usercase";
 import { marketTypeConfig } from "../config";
 import { MARKET_TYPE } from "../config";
 import { MarketType } from "../domain/enum/market-type.enum";
+import { readBalanceFromSupabase } from "../infra/database/balance.supabase";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -25,6 +26,7 @@ export const getPortfolio = async (): Promise<Portfolio> => {
     const portfolioData = await readFile(marketTypeConfig[MARKET_TYPE].portforlio, "utf-8");
     const portfolio = portfolioSchema.parse(JSON.parse(portfolioData));
     
+    portfolio.cash = await readBalanceFromSupabase();
     portfolio.history = await readTradesFromSupabase();
     return portfolio;
   };
