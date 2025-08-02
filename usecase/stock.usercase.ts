@@ -28,7 +28,7 @@ export const setLogFunction = (fn: (message: string) => void) => {
  */
 export const getStockPrice = async (ticker: string): Promise<number> => {
 
-  log(`🔍 Searching price for: ${ticker}`);
+  log(`🔍 Searching price for stock: ${ticker}`);
 
   try {
 
@@ -105,6 +105,8 @@ const getStockPriceFromYahoo = async (ticker: string): Promise<number> => {
       if (price && typeof price === 'number' && price > 0) {
         log(`✅ Found price for ${ticker}: $${price} via Yahoo Finance API`);
         return price;
+      } else {
+        throw new Error(`Stock price not found for ${ticker}. [Status=${response.status}, Data=${data}]`);
       }
     }
  

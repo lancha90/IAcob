@@ -1,11 +1,12 @@
 import { writeTradeToSupabase } from "../infra/database/trades.supabase";
 import { getPortfolio } from "./portafolio.usecase";
-import { getStockPrice } from "./stock.usercase";
+import { getStockPrice, getCryptoPrice } from "./stock.usercase";
 import { randomUUID } from "crypto";
 import { writeFile } from "node:fs/promises";
 import { marketTypeConfig } from "../config";
 import { MARKET_TYPE } from "../config";
 import { writeBalanceToSupabase } from "../infra/database/balance.supabase";
+import { MarketType } from "../domain/enum/market-type.enum";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -17,7 +18,7 @@ export const setLogFunction = (fn: (message: string) => void) => {
 };
 
 export const buyStock = async (ticker: string, shares: number) => {
-    const price = await getStockPrice(ticker);
+    const price = (MARKET_TYPE === MarketType.STOCK ? await getStockPrice(ticker) : await getCryptoPrice(ticker));
     const portfolio = await getPortfolio();
     const code = randomUUID();
       
@@ -67,7 +68,7 @@ export const sellStock = async (ticker: string, shares: number) => {
       return `You don't have enough shares of ${ticker} to sell. You have ${portfolio.holdings[ticker]} shares.`;
     }
 
-    const price = await getStockPrice(ticker);
+    const price = (MARKET_TYPE === MarketType.STOCK ? await getStockPrice(ticker) : await getCryptoPrice(ticker));
     portfolio.holdings[ticker] = (portfolio.holdings[ticker] ?? 0) - shares;
     portfolio.history = [];
 

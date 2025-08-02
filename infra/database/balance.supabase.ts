@@ -10,7 +10,6 @@
 
 import { createClient } from '@supabase/supabase-js';
 import invariant from 'tiny-invariant';
-import { createTradeSchema, type Trade, type CreateTrade } from '../../domain/dto/trade.dto.js';
 import { MARKET_TYPE } from '../../config.js';
 import { UUID } from 'crypto';
 
@@ -24,6 +23,15 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
+
+/**
+ * Función de logging externa (debe ser inyectada)
+ */
+let log: (message: string) => void = console.log;
+
+export const setLogFunction = (fn: (message: string) => void) => {
+  log = fn;
+};
 
 /**
  * Lee el último balance desde la tabla gh-iacob-balance en Supabase
@@ -48,11 +56,11 @@ export const readBalanceFromSupabase = async (): Promise<number> => {
       throw new Error('No se encontró balance válido en Supabase');
     }
 
-    console.log(`💰 Balance leído desde Supabase: $${data.balance}`);
+    log(`💰 Balance leído desde Supabase: $${data.balance}`);
     return data.balance;
 
   } catch (error) {
-    console.error('❌ Error leyendo balance desde Supabase:', error);
+    log(`❌ Error leyendo balance desde Supabase: ${error}`);
     throw error;
   }
 };
@@ -87,11 +95,11 @@ export const writeBalanceToSupabase = async (
       throw new Error('No UUID retornado de la operación en Supabase');
     }
 
-    console.log(`💾 Trade guardado en Supabase: ${data.id}`);
+    log(`💾 Trade guardado en Supabase: ${data.id}`);
     return data.id;
 
   } catch (error) {
-    console.error('❌ Error escribiendo trade a Supabase:', error);
+    log(`❌ Error escribiendo trade a Supabase: ${error}`);
     throw error;
   }
 };
