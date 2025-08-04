@@ -65,7 +65,7 @@ export const loadThreadLimited = async (
       .filter(item => item.name !== "get_portfolio")
       .filter(item => item.name !== "buy")
       .filter(item => item.name !== "sell")
-      .slice(-maxItems);
+      // .slice(-maxItems);
        
       log(`🔢 Loaded limited thread history: ${recentThread.length} items (max ${maxItems})`);
 
