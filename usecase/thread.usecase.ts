@@ -17,10 +17,17 @@ export const setLogFunction = (fn: (message: string) => void) => {
  * Guarda el historial de conversación en archivo JSON
  * @param thread - Array de elementos del hilo de conversación a guardar
  */
-export const saveThread = async (thread: AgentInputItem[]) => {
+export const saveThread = async (history: AgentInputItem[], thread: AgentInputItem[]) => {
   try {
-    await writeFile(marketTypeConfig[MARKET_TYPE].thread_file, JSON.stringify(thread, null, 2));
-    log(`💾 Saved thread history (${thread.length} items)`);
+    // Filtrar solo los items de thread que no están en history
+    const newItems = thread.filter(threadItem => 
+      !history.some(historyItem => 
+        JSON.stringify(threadItem) === JSON.stringify(historyItem)
+      )
+    );
+
+    await writeFile(marketTypeConfig[MARKET_TYPE].thread_file, JSON.stringify(newItems, null, 2));
+    log(`💾 Saved thread history (${newItems.length} new items)`);
   } catch (error) {
     log(`❌ Failed to save thread history: ${error}`);
   }

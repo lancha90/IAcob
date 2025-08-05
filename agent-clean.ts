@@ -119,5 +119,5 @@ log(`🎉 Agent finished: ${result.finalOutput}`);
 await sendWhatsAppMessage(`IAcob is online`, process.env.WHATSAPP_RECIPIENT_NUMBER);
 
 // Guardar resultados y actualizar documentación
-await saveThread(result.history);
+await saveThread(result.history, thread);
 await updateReadme();
