@@ -20,7 +20,7 @@ import { getStockPriceTool, getCryptoPriceTool, setLogFunction as setStockLogFun
 import { setOpenAIClient as setStockOpenAIClient } from './usecase/stock.usercase.js';
 import { setOpenAIClient as setWebSearchOpenAIClient } from './usecase/websearch.usecase.js';
 import { updateReadme, setLogFunction as setReadmeLogFunction } from './usecase/readme.usecase.js';
-import { loadThread, loadThreadLimited, saveThread } from './usecase/thread.usecase.js';
+import { loadLastThreadFiles, loadThread, loadThreadLimited, saveThread } from './usecase/thread.usecase.js';
 import { webSearchTool, setLogFunction as setWebSearchLogFunction } from './usecase/tools/websearch.tools.js';
 import { thinkTool, setLogFunction as setThinkLogFunction } from './usecase/tools/think.tools.js';
 import { setOpenAIClient as setNotificationOpenAIClient, setLogFunction as setNotificationLogFunction, sendWhatsAppMessage } from './usecase/notification.usecase.js';
@@ -102,8 +102,8 @@ const agent = new Agent({
 log("Starting agent");
 
 // Cargar historial previo y ejecutar el agente con mensaje de trading
-const thread = await loadThreadLimited(30);
-// const thread = await loadThread();
+const thread = await loadLastThreadFiles();
+
 const result = await run(
   agent,
   thread.concat({

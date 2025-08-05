@@ -1,6 +1,6 @@
 import { AgentInputItem } from "@openai/agents";
 import { existsSync } from "fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, readdir } from "node:fs/promises";
 import { MARKET_TYPE } from "../config";
 import { marketTypeConfig } from "../config";
 
@@ -19,7 +19,7 @@ export const setLogFunction = (fn: (message: string) => void) => {
  */
 export const saveThread = async (thread: AgentInputItem[]) => {
   try {
-    await writeFile(marketTypeConfig[MARKET_TYPE].thread, JSON.stringify(thread, null, 2));
+    await writeFile(marketTypeConfig[MARKET_TYPE].thread_file, JSON.stringify(thread, null, 2));
     log(`💾 Saved thread history (${thread.length} items)`);
   } catch (error) {
     log(`❌ Failed to save thread history: ${error}`);
@@ -77,4 +77,52 @@ export const loadThreadLimited = async (
     log(`⚠️ Failed to load limited thread history: ${error}`);
   }
   return [];
+};
+
+export const loadLastThreadFiles = async (): Promise<AgentInputItem[]> => {
+  try {
+    const threadFolder = marketTypeConfig[MARKET_TYPE].thread_folder;
+    
+    if (!existsSync(threadFolder)) {
+      log(`⚠️ Thread folder not found: ${threadFolder}`);
+      return [];
+    }
+
+    const files = await readdir(threadFolder);
+    const jsonFiles = files
+      .filter((file: string) => file.endsWith('.json'))
+      .sort()
+      .slice(-2);
+
+    if (jsonFiles.length === 0) {
+      log(`⚠️ No JSON files found in thread folder: ${threadFolder}`);
+      return [];
+    }
+
+    const allThreadItems: AgentInputItem[] = [];
+
+    for (const file of jsonFiles) {
+      const filePath = `${threadFolder}${file}`;
+      const fileData = await readFile(filePath, "utf-8");
+      const threadData = JSON.parse(fileData);
+      
+      if (Array.isArray(threadData)) {
+        allThreadItems.push(...threadData);
+      }
+    }
+
+    const filteredThreadItems = allThreadItems
+    .filter(item => item.name !== "get_crypto_price")
+    .filter(item => item.name !== "get_stock_price")
+    .filter(item => item.name !== "get_portfolio")
+    .filter(item => item.name !== "buy")
+    .filter(item => item.name !== "sell");
+
+    log(`🔢 Loaded last two thread files: ${jsonFiles.join(', ')} with ${filteredThreadItems.length} items`);
+    return filteredThreadItems;
+
+  } catch (error) {
+    log(`⚠️ Failed to load last two thread files: ${error}`);
+    return [];
+  }
 };
