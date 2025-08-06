@@ -13,6 +13,7 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   | ENPH | 6 | $191.46 |
 | MSFT | 1 | $527.75 |
 | ETH | 0.033 | $1.11 |
+| ANET | 2 | $236.24 |
   
   <!-- auto STOCK end -->
 
