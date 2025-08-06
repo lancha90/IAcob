@@ -4,16 +4,17 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
 
 <!-- auto STOCK start -->
   
-  ## 💰 Portfolio STOCK value: $1,024.23**
+  ## 💰 Portfolio STOCK value: $1,018.42**
   
   ### 📊 Holdings
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | ENPH | 6 | $187.66 |
-| MSFT | 1 | $528.19 |
-| ETH | 0.033 | $1.12 |
-| NVDA | 1 | $178.06 |
+  | ENPH | 6 | $184.54 |
+| MSFT | 1 | $526.10 |
+| ETH | 0.033 | $1.13 |
+| NVDA | 1 | $177.45 |
+| ETSY | 2 | $111.92 |
   
   <!-- auto STOCK end -->
 
