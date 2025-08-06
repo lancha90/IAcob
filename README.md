@@ -19,15 +19,16 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
 
   <!-- auto CRYPTO start -->
   
-  ## 💰 Portfolio CRYPTO value: $965.34**
+  ## 💰 Portfolio CRYPTO value: $963.48**
   
   ### 📊 Holdings
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | SOL | 0.8118999999999996 | $133.35 |
-| BTC | 0.004007999999999999 | $457.67 |
-| ETH | 0.0807 | $292.20 |
+  | SOL | 0.8118999999999996 | $133.53 |
+| BTC | 0.0029569999999999996 | $337.59 |
+| ETH | 0.0807 | $290.26 |
+| TON | 36 | $118.44 |
   
   <!-- auto CRYPTO end -->
 
