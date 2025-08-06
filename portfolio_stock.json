@@ -1,12 +1,13 @@
 {
-  "cash": 17.28,
+  "cash": 66.58,
   "holdings": {
-    "ENPH": 6,
+    "ENPH": 0,
     "MSFT": 1,
     "ETH": 0.033,
     "ANET": 0,
     "NVDA": 1,
-    "ETSY": 2
+    "ETSY": 2,
+    "BLDR": 1
   },
   "history": []
 }
