@@ -1,10 +1,11 @@
 {
-  "cash": 34.97,
+  "cash": 129.2,
   "holdings": {
     "ENPH": 6,
     "MSFT": 1,
     "ETH": 0.033,
-    "ANET": 2
+    "ANET": 0,
+    "NVDA": 1
   },
   "history": []
 }
