@@ -12,7 +12,7 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   |-------|--------|-------|
   | MSFT | 1 | $524.94 |
 | ETH | 0.033 | $1.15 |
-| BLDR | 1 | $130.74 |
+| BLDR | 2 | $261.48 |
 | SHOP | 1 | $154.90 |
   
   <!-- auto STOCK end -->
