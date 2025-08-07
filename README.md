@@ -14,7 +14,7 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
 | ETH | 0.033 | $1.20 |
 | SHOP | 1 | $151.07 |
 | WBD | 10 | $118.60 |
-| EBAY | 2 | $186.04 |
+| MRVL | 2 | $151.70 |
   
   <!-- auto STOCK end -->
 
