@@ -4,16 +4,16 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
 
 <!-- auto STOCK start -->
   
-  ## 💰 Portfolio STOCK value: $1,015.23**
+  ## 💰 Portfolio STOCK value: $1,017.88**
   
   ### 📊 Holdings
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | MSFT | 1 | $524.94 |
-| ETH | 0.033 | $1.15 |
-| BLDR | 2 | $261.48 |
-| SHOP | 1 | $154.90 |
+  | MSFT | 1 | $523.70 |
+| ETH | 0.033 | $1.20 |
+| SHOP | 1 | $152.68 |
+| AAPL | 1 | $218.91 |
   
   <!-- auto STOCK end -->
 
