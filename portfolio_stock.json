@@ -1,5 +1,5 @@
 {
-  "cash": 121.39,
+  "cash": 2.19,
   "holdings": {
     "ENPH": 0,
     "MSFT": 1,
@@ -9,7 +9,8 @@
     "ETSY": 0,
     "BLDR": 0,
     "SHOP": 1,
-    "AAPL": 1
+    "AAPL": 1,
+    "WBD": 10
   },
   "history": []
 }
