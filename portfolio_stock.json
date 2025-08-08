@@ -1,7 +1,7 @@
 {
-  "cash": 71.7,
+  "cash": 128.03,
   "holdings": {
-    "ENPH": 0,
+    "ENPH": 3,
     "MSFT": 1,
     "ETH": 0.033,
     "ANET": 0,
@@ -12,7 +12,7 @@
     "AAPL": 0,
     "WBD": 10,
     "EBAY": 0,
-    "MRVL": 2
+    "MRVL": 0
   },
   "history": []
 }

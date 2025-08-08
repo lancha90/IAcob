@@ -10,11 +10,11 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | MSFT | 1 | $520.84 |
+  | ENPH | 3 | $95.37 |
+| MSFT | 1 | $520.84 |
 | ETH | 0.033 | $1.20 |
 | SHOP | 1 | $151.07 |
 | WBD | 10 | $118.60 |
-| MRVL | 2 | $151.70 |
   
   <!-- auto STOCK end -->
 
