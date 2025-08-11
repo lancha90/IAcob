@@ -1,5 +1,5 @@
 {
-  "cash": 41.06,
+  "cash": 22.16,
   "holdings": {
     "ENPH": 3,
     "MSFT": 1,
@@ -13,7 +13,8 @@
     "WBD": 10,
     "EBAY": 0,
     "MRVL": 0,
-    "ACMR": 8
+    "ACMR": 4,
+    "LUV": 4
   },
   "history": []
 }
