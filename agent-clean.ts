@@ -95,6 +95,7 @@ const marketTools = {
 const agent = new Agent({
   name: marketTypeConfig[MARKET_TYPE].name,
   instructions: await readFile(marketTypeConfig[MARKET_TYPE].prompt, "utf-8"),
+  model: "gpt-5-mini", // Selecting the GPT-4o model
   tools: [thinkTool, webSearchTool, ...marketTools[MARKET_TYPE].tools],
 });
 
