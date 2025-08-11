@@ -90,6 +90,8 @@ const getStockPriceFromAlphavantage = async (ticker: string): Promise<number> =>
     if (!isNaN(price) && price > 0) {
       log(`✅ Found price for ${ticker}: $${price} via Alpha Vantage`);
       return price;
+    } else {
+        throw new Error(`Stock price not found for ${ticker}. [Status=${response.status}, Data=${data}]`);
     }
   }
 
