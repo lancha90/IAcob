@@ -1,7 +1,7 @@
 {
-  "cash": 45.85,
+  "cash": 24.57,
   "holdings": {
-    "ENPH": 3,
+    "ENPH": 7,
     "MSFT": 1,
     "ETH": 0.033,
     "ANET": 0,
@@ -16,7 +16,7 @@
     "ACMR": 4,
     "LUV": 4,
     "MU": 1,
-    "OPFI": 10
+    "OPFI": 0
   },
   "history": []
 }

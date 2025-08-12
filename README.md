@@ -10,13 +10,12 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | ENPH | 3 | $97.71 |
+  | ENPH | 7 | $227.99 |
 | MSFT | 1 | $521.77 |
 | ETH | 0.033 | $1.32 |
 | ACMR | 4 | $95.68 |
 | LUV | 4 | $116.24 |
 | MU | 1 | $123.72 |
-| OPFI | 10 | $109.00 |
   
   <!-- auto STOCK end -->
 
