@@ -1,11 +1,11 @@
 {
-  "cash": 14.36,
+  "cash": 43.79,
   "holdings": {
     "ENPH": 16,
     "MSFT": 0,
     "ETH": 0.033,
     "ANET": 0,
-    "NVDA": 2,
+    "NVDA": 1,
     "ETSY": 0,
     "BLDR": 0,
     "SHOP": 0,
@@ -16,7 +16,8 @@
     "ACMR": 9,
     "LUV": 0,
     "MU": 0,
-    "OPFI": 0
+    "OPFI": 0,
+    "QCOM": 1
   },
   "history": []
 }
