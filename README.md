@@ -12,8 +12,7 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   |-------|--------|-------|
   | ENPH | 16 | $536.96 |
 | ETH | 0.033 | $1.41 |
-| NVDA | 1 | $183.16 |
-| ACMR | 9 | $224.37 |
+| NVDA | 2 | $366.32 |
 | QCOM | 1 | $153.73 |
   
   <!-- auto STOCK end -->
