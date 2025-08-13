@@ -13,7 +13,7 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   | ENPH | 17 | $581.74 |
 | ETH | 0.033 | $1.47 |
 | QCOM | 2 | $313.18 |
-| MRCY | 3 | $205.17 |
+| AMD | 1 | $184.42 |
   
   <!-- auto STOCK end -->
 

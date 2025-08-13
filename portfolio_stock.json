@@ -1,5 +1,5 @@
 {
-  "cash": 59.12,
+  "cash": 79.87,
   "holdings": {
     "ENPH": 17,
     "MSFT": 0,
@@ -18,7 +18,8 @@
     "MU": 0,
     "OPFI": 0,
     "QCOM": 2,
-    "MRCY": 3
+    "MRCY": 0,
+    "AMD": 1
   },
   "history": []
 }
