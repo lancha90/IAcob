@@ -10,10 +10,9 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | ENPH | 16 | $536.96 |
+  | ENPH | 19 | $637.64 |
 | ETH | 0.033 | $1.41 |
 | NVDA | 2 | $366.32 |
-| QCOM | 1 | $153.73 |
   
   <!-- auto STOCK end -->
 
