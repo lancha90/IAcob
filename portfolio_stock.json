@@ -1,7 +1,7 @@
 {
-  "cash": 23.78,
+  "cash": 11.96,
   "holdings": {
-    "ENPH": 9,
+    "ENPH": 5,
     "MSFT": 0,
     "ETH": 0.033,
     "ANET": 0,
@@ -20,7 +20,7 @@
     "QCOM": 2,
     "MRCY": 0,
     "AMD": 2,
-    "ARM": 1
+    "ARM": 2
   },
   "history": []
 }
