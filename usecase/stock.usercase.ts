@@ -66,7 +66,7 @@ export const getStockPrice = async (ticker: string): Promise<number> => {
 const getStockPriceFromIA = async (ticker: string): Promise<number> => {
 
   const response = await client!.responses.parse({
-    model: "gpt-4o-mini",
+    model: "gpt-5-mini",
     input: `What is the current price of the stock ticker $${ticker}? Please use web search to get the latest price and then answer in short.`,
     tools: [{ type: "web_search_preview" }],
     text: { format: zodTextFormat(z.object({ price: z.number() }), "price") },
@@ -121,7 +121,7 @@ export const getCryptoPrice = async (ticker: string): Promise<number> => {
 
   try {
     const response = await client!.responses.parse({
-      model: "gpt-4o-mini",
+      model: "gpt-5-mini",
       input: `What is the current price of the crypto "${ticker}"? Please use web search to get the latest price and then answer in short.`,
       tools: [{ type: "web_search_preview" }],
       text: { format: zodTextFormat(z.object({ price: z.number() }), "price") },
