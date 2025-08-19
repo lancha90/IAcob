@@ -16,7 +16,7 @@ export const setOpenAIClient = (clientInstance: OpenAI) => {
  */
 export const webSearch = async (query: string): Promise<string> => {
   const response = await client!.responses.create({
-    model: "gpt-5-mini",
+    model: "gpt-5-nano",
     input: `Please use web search to answer this query from the user and respond with a short summary in markdown of what you found:\\n\\n${query}`,
     tools: [{ type: "web_search_preview" }],
   });
