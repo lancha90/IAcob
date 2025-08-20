@@ -12,8 +12,8 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
   |-------|--------|-------|
   | ENPH | 17 | $606.56 |
 | ETH | 0.033 | $1.35 |
+| MRVL | 2 | $142.44 |
 | ARM | 1 | $131.16 |
-| AMAT | 1 | $160.96 |
 | INTC | 1 | $23.54 |
 | TJX | 1 | $138.27 |
   

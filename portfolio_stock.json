@@ -1,5 +1,5 @@
 {
-  "cash": 31.84,
+  "cash": 50.36,
   "holdings": {
     "ENPH": 17,
     "MSFT": 0,
@@ -12,7 +12,7 @@
     "AAPL": 0,
     "WBD": 0,
     "EBAY": 0,
-    "MRVL": 0,
+    "MRVL": 2,
     "ACMR": 0,
     "LUV": 0,
     "MU": 0,
@@ -21,7 +21,7 @@
     "MRCY": 0,
     "AMD": 0,
     "ARM": 1,
-    "AMAT": 1,
+    "AMAT": 0,
     "INTC": 1,
     "TJX": 1
   },
