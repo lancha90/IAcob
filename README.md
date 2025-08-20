@@ -4,18 +4,18 @@ An autonomous AI-powered trading agent built with OpenAI's Agents framework and 
 
 <!-- auto STOCK start -->
   
-  ## 💰 Portfolio STOCK value: $1,091.25**
+  ## 💰 Portfolio STOCK value: $1,093.68**
   
   ### 📊 Holdings
   
   | Asset | Shares | Value |
   |-------|--------|-------|
-  | ENPH | 12 | $429.24 |
-| ETH | 0.033 | $1.34 |
-| ARM | 2 | $259.22 |
-| AMAT | 1 | $159.85 |
-| INTC | 1 | $23.45 |
-| TJX | 1 | $139.07 |
+  | ENPH | 17 | $606.56 |
+| ETH | 0.033 | $1.35 |
+| ARM | 1 | $131.16 |
+| AMAT | 1 | $160.96 |
+| INTC | 1 | $23.54 |
+| TJX | 1 | $138.27 |
   
   <!-- auto STOCK end -->
 

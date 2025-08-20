@@ -1,7 +1,7 @@
 {
-  "cash": 79.08,
+  "cash": 31.84,
   "holdings": {
-    "ENPH": 12,
+    "ENPH": 17,
     "MSFT": 0,
     "ETH": 0.033,
     "ANET": 0,
@@ -20,7 +20,7 @@
     "QCOM": 0,
     "MRCY": 0,
     "AMD": 0,
-    "ARM": 2,
+    "ARM": 1,
     "AMAT": 1,
     "INTC": 1,
     "TJX": 1
