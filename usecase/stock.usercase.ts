@@ -115,7 +115,50 @@ const getStockPriceFromYahoo = async (ticker: string): Promise<number> => {
     throw new Error(`Failed to get stock price for ${ticker}. [Status=${response.status}, Data=${response.json()}]`);
 };
 
+/**
+ * Obtiene el precio actual de una acción específica usando búsqueda web
+ * @param ticker - Símbolo de la acción (ej: AAPL, TSLA)
+ * @returns Precio actual de la acción
+ * @throws Error si no se puede obtener el precio
+ */
 export const getCryptoPrice = async (ticker: string): Promise<number> => {
+
+  log(`🔍 Searching price for stock: ${ticker}`);
+
+  try {
+
+    try {
+      const price = await getStockPriceFromYahoo(ticker);
+      if (price) {
+        log(`✅ Found price for ${ticker}: $${price} via Yahoo Finance API`);
+        return price;
+      }
+
+    } catch (yahooError) {
+      log(`⚠️ Yahoo Finance API failed for ${ticker}: ${yahooError}`);
+    }
+
+    // Fallback to Alpha Vantage demo endpoint (if available)
+    try {
+      const price = await getStockPriceFromAlphavantage(ticker);
+      if (price) {
+        log(`✅ Found price for ${ticker}: $${price} via Alpha Vantage`);
+        return price;
+      }
+    } catch (alphaError) {
+      log(`⚠️ Alpha Vantage API failed for ${ticker}: ${alphaError}`);
+    }
+
+    return getCryptoPriceFromIA(ticker);
+
+  } catch (error: Error) {
+    log(`❌ Error getting stock price for ${ticker}: ${error.message}`);
+    log(`Stack trace: ${error.stack}`);
+    throw error;
+  }
+};
+
+export const getCryptoPriceFromIA = async (ticker: string): Promise<number> => {
 
   log(`🔍 Searching price for crypto: ${ticker}`);
 
