@@ -18,7 +18,7 @@ import { setLogFunction as setPortfolioLogFunction } from "./usecase/tools/portf
 import { setLogFunction as setTradingLogFunction } from "./usecase/tools/trading.tools.js";
 import { getStockPriceTool, getCryptoPriceTool, setLogFunction as setStockLogFunction } from "./usecase/tools/stock.tools.js";
 import { setOpenAIClient as setStockOpenAIClient } from './usecase/stock.usercase.js';
-import { setOpenAIClient as setWebSearchOpenAIClient } from './usecase/websearch.usecase.js';
+import { setOpenAIClient as setWebSearchOpenAIClient, setLogFunction as setWebSearchUseCaseLogFunction } from './usecase/websearch.usecase.js';
 import { updateReadme, setLogFunction as setReadmeLogFunction } from './usecase/readme.usecase.js';
 import { loadLastThreadFiles, loadThread, loadThreadLimited, saveThread } from './usecase/thread.usecase.js';
 import { webSearchTool, setLogFunction as setWebSearchLogFunction } from './usecase/tools/websearch.tools.js';
@@ -61,6 +61,7 @@ setPortfolioLogFunction(log);
 setNotificationLogFunction(log);
 setBalanceLogFunction(log);
 setTradeLogFunction(log);
+setWebSearchUseCaseLogFunction(log);
 
 setStockOpenAIClient(client);
 setWebSearchOpenAIClient(client);
