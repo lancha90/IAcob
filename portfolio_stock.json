@@ -1,7 +1,7 @@
 {
-  "cash": 50.37,
+  "cash": 71.63,
   "holdings": {
-    "ENPH": 20,
+    "ENPH": 23,
     "MSFT": 0,
     "ETH": 0.033,
     "ANET": 0,
@@ -23,7 +23,7 @@
     "ARM": 0,
     "AMAT": 0,
     "INTC": 1,
-    "TJX": 1
+    "TJX": 0
   },
   "history": []
 }
