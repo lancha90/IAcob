@@ -43,6 +43,7 @@ jobs:
           WHATSAPP_RECIPIENT_NUMBER: ${{ secrets.WHATSAPP_RECIPIENT_NUMBER }}
           ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
           IACOB_MARKET_TYPE: STOCK
+          IBKR_API_KEY: ${{ secrets.STOCK_IBKR_API_KEY }}
         run: npm start
 
       - name: Commit portfolio changes

@@ -32,26 +32,15 @@ export const getStockPrice = async (ticker: string): Promise<number> => {
 
   try {
 
-    try {
-      const price = await getStockPriceFromYahoo(ticker);
-      if (price) {
-        log(`✅ Found price for ${ticker}: $${price} via Yahoo Finance API`);
-        return price;
-      }
-
-    } catch (yahooError) {
-      log(`⚠️ Yahoo Finance API failed for ${ticker}: ${yahooError}`);
-    }
-
     // Fallback to Alpha Vantage demo endpoint (if available)
     try {
-      const price = await getStockPriceFromAlphavantage(ticker);
+      const price = await getStockPriceFromIBKR(ticker);
       if (price) {
-        log(`✅ Found price for ${ticker}: $${price} via Alpha Vantage`);
+        log(`✅ Found price for ${ticker}: $${price} via IBKR`);
         return price;
       }
-    } catch (alphaError) {
-      log(`⚠️ Alpha Vantage API failed for ${ticker}: ${alphaError}`);
+    } catch (ibkrError) {
+      log(`⚠️ IBKR API failed for ${ticker}: ${ibkrError}`);
     }
 
     return getStockPriceFromIA(ticker);
@@ -80,32 +69,15 @@ const getStockPriceFromIA = async (ticker: string): Promise<number> => {
 
 };
 
-const getStockPriceFromAlphavantage = async (ticker: string): Promise<number> => {
+const getStockPriceFromIBKR = async (ticker: string): Promise<number> => {
 
-  // Note: This is a demo endpoint and may have rate limits
-  const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=${process.env.ALPHAVANTAGE_API_KEY}`);
-  if (response.ok) {
-    const data = await response.json();
-    const price = parseFloat(data?.['Global Quote']?.['05. price']);
-    if (!isNaN(price) && price > 0) {
-      log(`✅ Found price for ${ticker}: $${price} via Alpha Vantage`);
-      return price;
-    } else {
-        throw new Error(`Stock price not found for ${ticker}. [Status=${response.status}, Data=${data}]`);
-    }
-  }
-
-  throw new Error(`Failed to get stock price for ${ticker}. [Status=${response.status}, Data=${response.json()}]`);
-};
-
-const getStockPriceFromYahoo = async (ticker: string): Promise<number> => {
-
-    const response = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1d`);
+    const response = await fetch(`https://broker-simulator.onrender.com/api/v1/price/${ticker}`);
     if (response.ok) {
       const data = await response.json();
-      const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice;
+      const price = data?.price;
+      
       if (price && typeof price === 'number' && price > 0) {
-        log(`✅ Found price for ${ticker}: $${price} via Yahoo Finance API`);
+        log(`✅ Found price for ${ticker}: $${price} via IBKR`);
         return price;
       } else {
         throw new Error(`Stock price not found for ${ticker}. [Status=${response.status}, Data=${data}]`);
@@ -127,26 +99,15 @@ export const getCryptoPrice = async (ticker: string): Promise<number> => {
 
   try {
 
-    try {
-      const price = await getStockPriceFromYahoo(ticker);
-      if (price) {
-        log(`✅ Found price for ${ticker}: $${price} via Yahoo Finance API`);
-        return price;
-      }
-
-    } catch (yahooError) {
-      log(`⚠️ Yahoo Finance API failed for ${ticker}: ${yahooError}`);
-    }
-
     // Fallback to Alpha Vantage demo endpoint (if available)
     try {
-      const price = await getStockPriceFromAlphavantage(ticker);
+      const price = await getStockPriceFromIBKR(ticker);
       if (price) {
-        log(`✅ Found price for ${ticker}: $${price} via Alpha Vantage`);
+        log(`✅ Found crypto price for ${ticker}: $${price} via IBKR`);
         return price;
       }
-    } catch (alphaError) {
-      log(`⚠️ Alpha Vantage API failed for ${ticker}: ${alphaError}`);
+    } catch (ibkrError) {
+      log(`⚠️ IBKR API failed for ${ticker}: ${ibkrError}`);
     }
 
     return getCryptoPriceFromIA(ticker);

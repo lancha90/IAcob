@@ -8,14 +8,7 @@
  */
 
 import { tool } from "@openai/agents";
-import { writeFile } from "node:fs/promises";
-import { randomUUID } from "crypto";
 import { z } from "zod";
-import { writeTradeToSupabase } from "../../infra/database/trades.supabase.js";
-import { getPortfolio } from "../portafolio.usecase.js";
-import { getStockPrice } from "../stock.usercase.js";
-import { marketTypeConfig } from "../../config.js";
-import { MARKET_TYPE } from "../../config.js";
 import { buyStock, sellStock } from "../trading.usecase.js";
 
 /**

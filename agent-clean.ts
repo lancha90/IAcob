@@ -28,7 +28,7 @@ import { MarketType } from './domain/enum/market-type.enum.js';
 import { MARKET_TYPE, marketTypeConfig } from './config.js';
 import { buyTool, sellTool } from "./usecase/tools/trading.tools";
 import { getPortfolioTool, getNetWorthTool } from "./usecase/tools/portfolio.tools";
-import { setLogFunction as setBalanceLogFunction } from './infra/database/balance.supabase.js';
+import { setLogFunction as setBalanceLogFunction } from './usecase/balance.usecase.js';
 import { setLogFunction as setTradeLogFunction } from './infra/database/trades.supabase.js';
 
 

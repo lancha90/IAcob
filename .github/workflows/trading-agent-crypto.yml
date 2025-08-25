@@ -42,6 +42,7 @@ jobs:
           TWILIO_CONTENT_SID: ${{ secrets.TWILIO_CONTENT_SID }}
           WHATSAPP_RECIPIENT_NUMBER: ${{ secrets.WHATSAPP_RECIPIENT_NUMBER }}
           IACOB_MARKET_TYPE: CRYPTO
+          IBKR_API_KEY: ${{ secrets.CRYPTO_IBKR_API_KEY }}
         run: npm start
 
       - name: Commit portfolio changes

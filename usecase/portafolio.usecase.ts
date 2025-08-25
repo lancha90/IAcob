@@ -6,7 +6,7 @@ import { getCryptoPrice, getStockPrice } from "./stock.usercase";
 import { marketTypeConfig } from "../config";
 import { MARKET_TYPE } from "../config";
 import { MarketType } from "../domain/enum/market-type.enum";
-import { readBalanceFromSupabase } from "../infra/database/balance.supabase";
+import { readBalanceFromBroker } from "./balance.usecase";
 
 /**
  * Función de logging externa (debe ser inyectada)
@@ -26,7 +26,7 @@ export const getPortfolio = async (): Promise<Portfolio> => {
     const portfolioData = await readFile(marketTypeConfig[MARKET_TYPE].portforlio, "utf-8");
     const portfolio = portfolioSchema.parse(JSON.parse(portfolioData));
     
-    portfolio.cash = await readBalanceFromSupabase();
+    portfolio.cash = await readBalanceFromBroker();
     portfolio.history = await readTradesFromSupabase();
     return portfolio;
   };
